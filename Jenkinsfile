@@ -36,7 +36,7 @@ pipeline {
                 echo No TestNG logs found > logs.txt
             )
 
-            curl -X POST http://localhost:8000/logs/ ^
+            curl -X POST http://localhost:8000/logs ^
               -H "Content-Type: application/json" ^
               --data-binary @logs.txt
             '''
