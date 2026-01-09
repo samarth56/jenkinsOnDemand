@@ -38,7 +38,7 @@ pipeline {
 
             echo Sending logs to AI system...
 
-            curl -X POST http://localhost:8000/logs/analyze ^
+            curl -X POST http://localhost:8000/logs/ ^
                  -H "Content-Type: text/plain" ^
                  --data-binary @logs.txt ^
                  > ai_response.json
