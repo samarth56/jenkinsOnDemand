@@ -3,7 +3,7 @@ package com.example;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class fail {
+public class FailingTest {
 
     @Test
     public void failTest() {

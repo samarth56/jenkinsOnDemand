@@ -2,12 +2,12 @@
 <testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2026-01-09T19:39:00 IST" name="Default suite" finished-at="2026-01-09T19:39:00 IST" duration-ms="106">
+  <suite started-at="2026-01-09T20:24:15 IST" name="Default suite" finished-at="2026-01-09T20:24:15 IST" duration-ms="51">
     <groups>
     </groups>
-    <test started-at="2026-01-09T19:39:00 IST" name="Default test" finished-at="2026-01-09T19:39:00 IST" duration-ms="106">
-      <class name="com.example.fail">
-        <test-method signature="failTest()[pri:0, instance:com.example.fail@1aafa419]" started-at="2026-01-09T19:39:00 IST" name="failTest" finished-at="2026-01-09T19:39:00 IST" duration-ms="33" status="FAIL">
+    <test started-at="2026-01-09T20:24:15 IST" name="Default test" finished-at="2026-01-09T20:24:15 IST" duration-ms="51">
+      <class name="com.example.FailingTest">
+        <test-method signature="failTest()[pri:0, instance:com.example.FailingTest@1aafa419]" started-at="2026-01-09T20:24:15 IST" name="failTest" finished-at="2026-01-09T20:24:15 IST" duration-ms="15" status="FAIL">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[Intentional failure expected [true] but found [false]]]>
@@ -17,7 +17,7 @@
 at org.testng.Assert.fail(Assert.java:111)
 at org.testng.Assert.failNotEquals(Assert.java:1578)
 at org.testng.Assert.assertTrue(Assert.java:57)
-at com.example.fail.failTest(fail.java:11)
+at com.example.FailingTest.failTest(FailingTest.java:11)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -52,7 +52,7 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
           <reporter-output>
           </reporter-output>
         </test-method> <!-- failTest -->
-      </class> <!-- com.example.fail -->
+      </class> <!-- com.example.FailingTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
