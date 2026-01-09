@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        LOG_API_URL = "http://localhost:8000/logs"
-    }
-
     stages {
 
         stage('Test API Connectivity') {
@@ -32,12 +28,17 @@ pipeline {
             echo 'Build failed. Sending logs to AI system'
 
             bat '''
-            echo Collecting logs...
-            type target\\surefire-reports\\*.txt > logs.txt
+            echo Collecting TestNG logs...
 
-            curl -X POST %LOG_API_URL% ^
-            -H "Content-Type: application/json" ^
-            -d "{ \\"test_name\\": \\"Jenkins Build #%BUILD_NUMBER%\\", \\"raw_log\\": \\"Test failure from Jenkins\\" }"
+            IF EXIST target\\surefire-reports\\*.txt (
+                type target\\surefire-reports\\*.txt > logs.txt
+            ) ELSE (
+                echo No surefire logs found > logs.txt
+            )
+
+            curl -X POST http://localhost:8000/logs/ ^
+              -H "Content-Type: application/json" ^
+              -d "{ \\"test_name\\": \\"Jenkins Build #${BUILD_NUMBER}\\", \\"raw_log\\": \\"TestNG failure occurred. Check surefire reports.\\" }"
             '''
         }
     }
