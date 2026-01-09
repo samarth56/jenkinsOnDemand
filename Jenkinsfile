@@ -10,7 +10,7 @@ pipeline {
         stage('Test API Connectivity') {
             steps {
                 echo 'Testing FastAPI connectivity'
-                sh 'curl http://localhost:8000/health'
+                bat 'curl http://localhost:8000/health'
             }
         }
 
@@ -22,7 +22,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
     }
@@ -31,15 +31,13 @@ pipeline {
         failure {
             echo 'Build failed. Sending logs to AI system'
 
-            sh '''
-            LOGS=$(cat target/surefire-reports/*.txt | tail -n 300)
+            bat '''
+            echo Collecting logs...
+            type target\\surefire-reports\\*.txt > logs.txt
 
-            curl -X POST $LOG_API_URL \
-            -H "Content-Type: application/json" \
-            -d "{
-              \\"test_name\\": \\"Jenkins Build #${BUILD_NUMBER}\\",
-              \\"raw_log\\": \\"$LOGS\\"
-            }"
+            curl -X POST %LOG_API_URL% ^
+            -H "Content-Type: application/json" ^
+            -d "{ \\"test_name\\": \\"Jenkins Build #%BUILD_NUMBER%\\", \\"raw_log\\": \\"Test failure from Jenkins\\" }"
             '''
         }
     }
