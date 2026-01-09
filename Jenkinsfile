@@ -25,7 +25,7 @@ pipeline {
 
     post {
         failure {
-            echo 'Build failed. Sending logs to AI system'
+            echo 'Build failed. Collecting logs and sending to AI...'
 
             bat '''
             echo Collecting TestNG logs...
@@ -36,10 +36,19 @@ pipeline {
                 echo No TestNG logs found > logs.txt
             )
 
-            curl -X POST http://localhost:8000/logs/ ^
-              -H "Content-Type: text/plain" ^
-              --data-binary @logs.txt
+            echo Sending logs to AI system...
+
+            curl -X POST http://localhost:8000/logs/analyze ^
+                 -H "Content-Type: text/plain" ^
+                 --data-binary @logs.txt ^
+                 > ai_response.json
+
+            echo ================= AI ANALYSIS =================
+            type ai_response.json
+            echo ==============================================
             '''
+
+            archiveArtifacts artifacts: 'logs.txt, ai_response.json', fingerprint: true
         }
     }
 }
