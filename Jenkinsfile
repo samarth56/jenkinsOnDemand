@@ -33,12 +33,12 @@ pipeline {
             IF EXIST target\\surefire-reports\\*.txt (
                 type target\\surefire-reports\\*.txt > logs.txt
             ) ELSE (
-                echo No surefire logs found > logs.txt
+                echo No TestNG logs found > logs.txt
             )
 
             curl -X POST http://localhost:8000/logs/ ^
               -H "Content-Type: application/json" ^
-              -d "{ \\"test_name\\": \\"Jenkins Build #${BUILD_NUMBER}\\", \\"raw_log\\": \\"TestNG failure occurred. Check surefire reports.\\" }"
+              --data-binary @logs.txt
             '''
         }
     }
